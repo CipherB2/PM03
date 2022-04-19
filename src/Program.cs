@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace src
 {
     class Program
     {
-        class Smartphone
+        public class Smartphone
         {
             public string Model;
             public int Price;
@@ -39,15 +40,12 @@ namespace src
             }
             return ires;
         }
-        public class GadgetFactory
-        {
-
-        }
         static void Main(string[] args)
         {
+            string path = "Смартфоны.txt";
             List<Smartphone> SmartPhones = new List<Smartphone>();
             Console.Write("Введите размер массива:");
-            int N = Convert.ToInt16(Console.ReadLine());
+            int N = Convert.ToInt32(Console.ReadLine());
             for (int i=0; i<N; i++)
             {
                 Console.Write("Введите модель:");
@@ -65,6 +63,10 @@ namespace src
             Console.WriteLine("Список смартфонов после сортировки:");
             foreach (Smartphone smartphone in SmartPhones)
                 Console.WriteLine($"{smartphone.Model} ; {smartphone.Price} ; {smartphone.Size}");
+            FileStream fsdis = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            BinaryFormatter bfdis = new BinaryFormatter();
+            SmartPhones = (List<Smartphone>)bfdis.Deserialize(fsdis);
+            fsdis.Close();
             Console.ReadKey();
         }
     }
