@@ -65,7 +65,6 @@ namespace src
                 Console.WriteLine($"{smartphone.Model} ; {smartphone.Price} ; {smartphone.Size}");
             FileStream fsdis = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             BinaryFormatter bfdis = new BinaryFormatter();
-            SmartPhones = (List<Smartphone>)bfdis.Deserialize(fsdis);
             fsdis.Close();
             Console.ReadKey();
         }
